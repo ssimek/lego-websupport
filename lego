@@ -1,0 +1,15 @@
+#!/bin/sh
+
+ENTRYPOINT=
+if [ "$1" == "sh" ]; then
+    ENTRYPOINT="--entrypoint sh"
+    shift
+fi
+
+docker run --rm -it $ENTRYPOINT \
+    -v "$PWD/wslego":/usr/local/bin/wslego \
+    -v "$PWD/.lego":/.lego \
+    -e EXEC_PATH=/usr/local/bin/wslego \
+    -e WEBSUPPORT_API_KEY=$WEBSUPPORT_API_KEY \
+    -e WEBSUPPORT_API_SECRET=$WEBSUPPORT_API_SECRET \
+    goacme/lego "$@"

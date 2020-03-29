@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e
+
+CONTAINER=$(docker build -q "$PWD/build-container")
+docker run --rm -it -v "$PWD":/go/src/wslego -w /go/src/wslego $CONTAINER go build -ldflags "-w -s -linkmode external -extldflags -static"
